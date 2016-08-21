@@ -20,29 +20,32 @@ h2{
 
 }
 
-.charImg{
+.startStyle{
 	width: 150px;
 	margin: 10px;
-	color:black;
-	background-color: white;
+	background-color: rgba(102, 102, 153, 0.4);
 	padding: 20px;
 	border: solid 2px black;
 }
 
 .userStyle{
-	border: solid 2px green;
-	color:black;
+	border: solid 2px darkgreen;
+	color:white;
 	padding: 20px;
-	background-color: yellow;
+	background-color: rgba(25, 76, 25, 0.8);
 }
 
 .opponentStyle{
-	background-color: red;
-	border: solid 2px white;
+	margin: 10px;
+	padding: 20px;
+	background-color: rgba(164, 34, 45, 0.4);
+	border: solid 2px darkred;
+	color:black;
 }
 
 .currentOpponent{
-	background-color: black;
-	color: blue;
-	border: solid 2px blue;
+	padding: 20px;
+	background-color: rgba(5, 9, 5, 0.8);
+	color: white;
+	border: solid 2px darkblue;
 }

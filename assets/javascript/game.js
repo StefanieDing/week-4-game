@@ -8,68 +8,70 @@ var charImg = ['Baymax.png', 'Hiro.png', 'GoGo.png', 'HoneyLemon.png', 'Wasabi.p
 var charHit = [200, 165, 185, 170, 180, 150];
 var charSpecialAttack = [250, 215, 235, 220, 230, 200];
 
-var opponents = 5;
-var userHP;
-var opponentHP;
-var oppentAttack;
-var opponentAttackArray = ['hit', 'spAttack', 'block'];
+var userHP; var opponentHP; var oppentAttack; opponents = 5; var opponentAttackArray = ['hit', 'spAttack', 'block'];
 
+$(".restartButton").on("click", function(){
+	//restarts the game..
+});
 //Plays & Pauses music
 $(".playButton").on("click", function(){
 	music.play();
 });
-
 $(".pauseButton").on("click", function(){
 	music.pause();
 });
 
-//Creating buttons *WIP Need to make images appear as not [objectObject]
+//Creating buttons *WIP Need to make images appear. 
 for(var i = 0; i < charName.length; i++){
 	var character = $('<button>');
 	character.attr('src', '../week-4-game/assets/images/' + charImg[i]);
-	character.addClass('charImg');
+	character.addClass('startStyle');
 	character.attr('id', charName[i]);
 	character.attr({'data-hp': charHP[i]});
 	character.attr({'data-hit': charHit[i]});
 	character.attr({'data-name': charName[i]});
 	character.attr({'data-spAttack': charSpecialAttack[i]});
-	character.html(charName[i] + $('src') + charHP[i]);
+	character.html(charName[i] + character.attr('src') + charHP[i]);
 	$('.startBtn').append(character);
 }
 
 
-$(document).ready(function() {
+$('.startStyle').one('click', function(){
+	userHP = $(this).data('hp');
+	console.log(userHP);
+	//Moves Button to 'Your Character'
+	$(this).removeClass('charImg startStyle').addClass('userStyle');
+	$(this).html($(this).data('name') + '[src]' + userHP);
+	$('.userChar').append($(this));
 
-	$('.charImg').on('click', function(){
-		userHP = $(this).data('hp');
-		console.log(userHP);
-		//Moves Button to 'Your Character'
-		$(this).removeClass('charImg startBtn').addClass('userStyle');
-		$(this).html($(this).data('name') + $('src') + userHP);
-		$('.userChar').append($(this));
-
-		//Moves other to 'Characters to Battle'
-		for(var i = 0; i < charName.length; i++){
-			if(charName[i] != $(this).data('name')){
-				$('#'+charName[i]).removeClass('charImg startBtn').addClass('opponentStyle');
-				$('.opponentChar').append($('#'+charName[i]));
-			}
+	//Moves other to 'Characters to Battle'
+	for(var i = 0; i < charName.length; i++){
+		if(charName[i] != $(this).data('name')){
+			$('#'+charName[i]).removeClass('charImg startStyle').addClass('opponentStyle');
+			$('#'+charName[i]).html($('#'+charName[i]).data('name') + '[src]' + $('#'+charName[i]).data('hp'));
+			$('.opponentChar').append($('#'+charName[i]));
 		}
-
-		chooseOpponent();
-	});
+	}
+	chooseOpponent();
+});
 
 //clicking opponents sends them to battleMode function. 
 function chooseOpponent(){
 	//Sets the opponent *Not working properly
-	$('.opponentStyle').on('click', function(){
+	$('.opponentStyle').one('click', function(){
 		opponentHP = $(this).data('hp');
 		console.log(opponentHP);
 		$(this).removeClass('opponentSyle opponentChar').addClass('currentOpponent');
-		$(this).html($(this).data('name') + $('src') + opponentHP);
+		$(this).html($(this).data('name') + '[src]' + opponentHP);
 		$('.chosenOpponent').append($(this));
 
-		battleMode($('.userChar'), $('.chosenOpponent'));
+		for(var i = 0; i < charName.length; i++){
+			if(charName[i] != $(this).data('name')){
+				$('#'+charName[i]).off('click');
+			}
+		}
+
+		//battleMode($('.userChar'), $('.chosenOpponent'));
 	});
 
 }
@@ -145,7 +147,6 @@ function battleMode(userChar, opponentChar){
 	//defenders = 5;
 	//newGame();
 
-});
 
 
 
