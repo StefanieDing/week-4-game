@@ -4,12 +4,15 @@ music.setAttribute('src', '../week-4-game/assets/sounds/FOB-Immortals.mp3');
 
 var charName = ['Baymax', 'Hiro','GoGo', 'Honey-Lemon', 'Wasabi-No-Ginger', 'Fred']
 var charHP = [2000, 1650, 1850, 1700, 1800, 1500];
-var charImg = ['../week-4-game/assets/images/Baymax.png', '../week-4-game/assets/images/Hiro.png', '../week-4-game/assets/images/GoGo.png', '../week-4-game/assets/images/HoneyLemon.png', '../week-4-game/assets/images/Wasabi.png', '../week-4-game/assets/images/Fred.png'];
+var charImg = ['Baymax.png', 'Hiro.png', 'GoGo.png', 'HoneyLemon.png', 'Wasabi.png', 'Fred.png'];
 var charHit = [200, 165, 185, 170, 180, 150];
 var charSpecialAttack = [250, 215, 235, 220, 230, 200];
 
-var defenders = []; //or set to 5?
-
+var opponents = 5;
+var userHP;
+var opponentHP;
+var oppentAttack;
+var opponentAttackArray = ['hit', 'spAttack', 'block'];
 
 //Plays & Pauses music
 $(".playButton").on("click", function(){
@@ -20,96 +23,129 @@ $(".pauseButton").on("click", function(){
 	music.pause();
 });
 
-//Creating buttons *WIP
+//Creating buttons *WIP Need to make images appear as not [objectObject]
 for(var i = 0; i < charName.length; i++){
-	//display name and HP *WIP
-	var character = $('<img>');
-	character.attr('src', charImg[i]);
-	//character.text(charName[i] + charHP[i]);
+	var character = $('<button>');
+	character.attr('src', '../week-4-game/assets/images/' + charImg[i]);
 	character.addClass('charImg');
+	character.attr('id', charName[i]);
 	character.attr({'data-hp': charHP[i]});
 	character.attr({'data-hit': charHit[i]});
-	character.attr({'data-spattack': charSpecialAttack[i]});
 	character.attr({'data-name': charName[i]});
-	$('#startBtn').append(character);
+	character.attr({'data-spAttack': charSpecialAttack[i]});
+	character.html(charName[i] + $('src') + charHP[i]);
+	$('.startBtn').append(character);
 }
 
-pickCharacter();
 
-function chooseCharacter(){
-//Sets first click to User character 
-$('.charImg').on('click', function(){
-	console.log($(this).data('name'));
-	//var userChar = this;
-	//userChar.addClass('userStyle');
-	//$('userChar').html(userChar);
-});
-}
+$(document).ready(function() {
 
-//Sets the other characters into enemy character div.
-//chooseDefender();
+	$('.charImg').on('click', function(){
+		userHP = $(this).data('hp');
+		console.log(userHP);
+		//Moves Button to 'Your Character'
+		$(this).removeClass('charImg startBtn').addClass('userStyle');
+		$(this).html($(this).data('name') + $('src') + userHP);
+		$('.userChar').append($(this));
 
-//clicking enemy sends them to battleMode function. 
-function chooseDefender(){
-	var defenderAttack
+		//Moves other to 'Characters to Battle'
+		for(var i = 0; i < charName.length; i++){
+			if(charName[i] != $(this).data('name')){
+				$('#'+charName[i]).removeClass('charImg startBtn').addClass('opponentStyle');
+				$('.opponentChar').append($('#'+charName[i]));
+			}
+		}
 
-}
+		chooseOpponent();
+	});
 
-function battleMode(){
+//clicking opponents sends them to battleMode function. 
+function chooseOpponent(){
+	//Sets the opponent *Not working properly
+	$('.opponentStyle').on('click', function(){
+		opponentHP = $(this).data('hp');
+		console.log(opponentHP);
+		$(this).removeClass('opponentSyle opponentChar').addClass('currentOpponent');
+		$(this).html($(this).data('name') + $('src') + opponentHP);
+		$('.chosenOpponent').append($(this));
 
-//set an array of different attacks and generate random 0-3 and sets the attck points to 'defenderAttack'
-
-$('.hitBtn').on('click', function(){
-	//if(defenderAttack == 'block'){
-		//userHP = userHP - this.data(spAttack);
-	//}
-	//defenderHP = defenderHP - this.data(hit);
-	//userHP = userHP - defenderAttack;
-});
-
-$('.spAttackBtn').on('click', function(){
-	//if(defenderAttack == 'block'){
-		//userHP = userHP - this.data(spAttack);
-	//}
-	//defenderHP = enemyHP - this.data(spAttack);
-	//userHP = userHP - defenderAttack;
-
-});
-
-$('.blockBtn').on('click', function(){
-	//if(defenderAttack == 'block'){
-		//userHP = userHP;
-		//defenderHP = defenderHP;
-	//}
-	//else{
-	//defenderHP = defenderHP - defenderAttack;
-	//}
-});
-
-	//if (userHP <= 0){
-		//message: you lost! Game Over.
-		//play loseAudio
-		//set up restart button which calls on newGame()
-	//}
-
-	//if ((enemyHP <= 0) && (defenders == 0)){
-		//message: you won the game!
-		//play winAudio
-		//set up restart button which calls on newGame()
-	//}
-
-	//if (enemyHP <= 0){
-		//message: you defeated the defender!
-		//play winAudio
-		//defenders--;
-		//chooseDefender();
-	//}
+		battleMode($('.userChar'), $('.chosenOpponent'));
+	});
 
 }
 
-//restart button
-//defenders = 5;
-//newGame();
+function battleMode(userChar, opponentChar){
+	//randomly selects an attack for the opponent and sets to opponentAttack *WIP
+	var randomAttack = Math.floor(Math.random() * 2);
+		if(randomAttack == 'block'){
+			opponentAttack = 'block';
+		}
+		else{
+			opponentAttack = $('.chosenOpponent').data(opponentAttackArray[randomAttack]);
+		}
+
+	console.log(randomAttack);
+	console.log(opponentAttack);
+
+	$('.hitBtn').on('click', function(){
+		if(opponentAttack == 'block'){
+			userHP = userHP - $('.userChar').data(hit);
+		}
+		else{
+			opponentHP = defenderHP - $('.userChar').data(hit);
+			userHP = userHP - opponentAttack;
+		}
+	});
+
+	$('.spAttackBtn').on('click', function(){
+		if(opponentsAttack == 'block'){
+			userHP = userHP - $('.userChar').data(spAttack);
+		}
+		else{
+			opponentHP = enemyHP - $('.userChar').data(spAttack);
+			userHP = userHP - opponentAttack;
+		}
+
+	});
+
+	$('.blockBtn').on('click', function(){
+		//If both character block, nothing happens
+		if(opponentsAttack == 'block'){
+			userHP = userHP;
+			opponentHP =opponentHP;
+		}
+		else{
+			opponentHP = opponentHP - opponentAttack;
+		}
+	});
+
+		if (userHP <= 0){
+			alert("You lost. Game over.");
+			//play loseAudio
+			//set up restart button which calls on newGame()
+		}
+
+		if ((opponentHP <= 0) && (defenders == 0)){
+			alert("You've defeated all your opponents! Congratulations, you've tasted sweet victory!");
+			//play winAudio
+			//set up restart button which calls on newGame()
+		}
+
+		if (opponentHP <= 0){
+			alert("You've defeated your opponent! Click another character to continue.");
+			//play winAudio
+			opponents--;
+			choosOpponent();
+		}
+
+	}
+
+
+	//restart button
+	//defenders = 5;
+	//newGame();
+
+});
 
 
 

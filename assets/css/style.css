@@ -4,7 +4,10 @@
 
 body{
 	background: url("../images/SanFransokyo-BG.jpg" ) no-repeat;
-	/*background-size*/
+}
+
+h2{
+	font-weight: bold;
 }
 
 .music-buttons{
@@ -20,15 +23,26 @@ body{
 .charImg{
 	width: 150px;
 	margin: 10px;
+	color:black;
 	background-color: white;
 	padding: 20px;
-	border: solid 1px black;
+	border: solid 2px black;
 }
 
 .userStyle{
-	border: solid 1px green;
+	border: solid 2px green;
+	color:black;
+	padding: 20px;
+	background-color: yellow;
 }
 
-.enemyStyle{
+.opponentStyle{
 	background-color: red;
+	border: solid 2px white;
+}
+
+.currentOpponent{
+	background-color: black;
+	color: blue;
+	border: solid 2px blue;
 }
