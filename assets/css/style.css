@@ -3,49 +3,52 @@
 }
 
 body{
-	background: url("../images/SanFransokyo-BG.jpg" ) no-repeat;
+	background: url("../images/SanFransokyo-BG.jpg" )no-repeat;
+	height:100%;
 }
 
 h2{
 	font-weight: bold;
 }
 
-.music-buttons{
-	margin: 10px;
+.header-buttons{
+	width: 100%;
 	background: rgba(240, 151, 224, 0.4);
-	padding: 20px;
+	padding:20px;
+	margin: 10px 0px;
 }
 
 .container{
 
 }
 
-.startStyle{
+.btn{
 	width: 150px;
-	margin: 10px;
-	background-color: rgba(102, 102, 153, 0.4);
+}
+.picStyle{
+	width: 100px;
+}
+.startStyle, .userStyle, .opponentStyle, .currentOpponent{
+	width: 150px;
+	margin: 5px;
 	padding: 20px;
+}
+.startStyle{
+	background-color: rgba(102, 102, 153, 0.4);
 	border: solid 2px black;
 }
 
 .userStyle{
 	border: solid 2px darkgreen;
-	color:white;
-	padding: 20px;
 	background-color: rgba(25, 76, 25, 0.8);
 }
 
 .opponentStyle{
-	margin: 10px;
-	padding: 20px;
 	background-color: rgba(164, 34, 45, 0.4);
 	border: solid 2px darkred;
-	color:black;
 }
 
-.currentOpponent{
-	padding: 20px;
+.currentOpponent{;
 	background-color: rgba(5, 9, 5, 0.8);
-	color: white;
 	border: solid 2px darkblue;
 }

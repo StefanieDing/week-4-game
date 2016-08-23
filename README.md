@@ -13,5 +13,3 @@ Instructions to play:
 	* When both characters block, nothing will happen.
 4. When you've defeated your opponent, you will select another opponent to battle.
 5. The goal of the game is to defeat all your opponents!
-
-GOOD LUCK!!!

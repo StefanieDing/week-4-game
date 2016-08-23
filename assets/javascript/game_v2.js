@@ -14,7 +14,7 @@ $(".pauseButton").on("click", function(){
 });
 
 //Set character features
-var baymax = {name: 'Baymax', hp: 2000, hit: 200,specialAttack: 250, image: $('#baymax').attr('src', '../week-4-game/assets/images/Baymax.png')}
+var baymax = {name: 'Baymax', hp: 2000, hit: 200,specialAttack: 250, image:'Baymax.png'}
 var hiro = {name: 'Hiro Takachiho', hp: 1650, hit: 165, specialAttack: 215, image: 'Hiro.png'}
 var goGo = {name: 'Gogo Tomago', hp: 1850, hit: 185, specialAttack: 235, image: 'GoGo.png'}
 var honeyLemon = {name: 'Honey Lemon', hp: 1700, hit: 170, specialAttack: 220, image: 'HoneyLemon.png'}
