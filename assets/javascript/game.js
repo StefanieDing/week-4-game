@@ -62,8 +62,10 @@ $(document).on('click', '.startStyle',function(){
 			$('.opponentChar').append($('#'+charName[i]));
 		}
 	}
+	chooseOpponent();
 });
 
+function chooseOpponent(){
 //clicking opponents sends them to battleMode function. 
 	$(document).on('click', '.opponentStyle', function(){
 		opponentHP = $(this).data('hp');
@@ -78,10 +80,9 @@ $(document).on('click', '.startStyle',function(){
 		}
 		battleMode();
 	});
+}
 
-function battleMode(){
-
-	//randomly selects an attack for the opponent and sets to opponentAttack 
+function generateOpponentAttack(){
 	var randomAttack = opponentAttackArray[Math.floor(Math.random() * 2)];
 		if(randomAttack == 'hit'){
 			opponentAttack = $('.currentOpponent').data('hit');
@@ -93,8 +94,13 @@ function battleMode(){
 			opponentAttack = 'block';
 		}
 	console.log(opponentAttack);
+}
 
-	$('.hitBtn').on('click', function(){
+function battleMode(){
+	
+
+	$('.hit').on('click', function(){
+		generateOpponentAttack();
 		userAttack = $('.userStyle').data('hit');
 		if(opponentAttack == 'block'){
 			userHP = userHP - userAttack
@@ -104,12 +110,13 @@ function battleMode(){
 			userHP = userHP - opponentAttack;
 		}
 		//not working properly
-		$('.userChar').attr('data-hp', userHP);
+		$('.userChar').data('hp', userHP);
 		console.log(userHP +" "+ opponentHP);
 		winOrLose()
 	});
 
-	$('.spAttackBtn').on('click', function(){
+	$('.spAttack').on('click', function(){
+		generateOpponentAttack();
 		userAttack = $('.userStyle').data('special');
 		if(opponentAttack == 'block'){
 			userHP = userHP - userAttack;
@@ -122,7 +129,8 @@ function battleMode(){
 		winOrLose()
 	});
 
-	$('.blockBtn').on('click', function(){
+	$('.block').on('click', function(){
+		generateOpponentAttack();
 		//If both character block, nothing happens
 		if(opponentAttack == 'block'){
 			userHP = userHP;
@@ -142,7 +150,7 @@ function winOrLose(){
 		fightAudio.play();
 		alert("You've defeated your opponent! Click another character to continue.");
 		$('.chosenOpponent').remove();
-		//$(document).off('click','.opponentStyle');
+		chooseOpponent();
 		opponents--;
 	}
 	if ((opponentHP <= 0) && (opponents == 0)){
@@ -155,9 +163,7 @@ function winOrLose(){
 		alert("You lost. Game over.");
 		//set up restart button which calls on newGame()
 	}
-	else{
-		battleMode();
-	}
+	//battleMode();
 }
 
 
