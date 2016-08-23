@@ -100,7 +100,7 @@ function generateOpponentAttack(){
 
 function displayHP(){
 		$('.currentOpponent').data('hp', opponentHP);
-		$('.enemigoHP').html(opponentHP);
+		$('.currentOpponent span').html(opponentHP);
 		$('.userStyle').data('hp', userHP);
 		$('.characterHP').html(userHP);
 }
