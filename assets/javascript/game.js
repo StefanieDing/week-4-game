@@ -71,8 +71,8 @@ function chooseOpponent(){
 	$(document).on('click', '.opponentStyle', function(){
 		opponentHP = $(this).data('hp');
 		console.log(opponentHP);
-		$(this + 'button span').removeClass('opponentSyle opponentChar').addClass('currentOpponent enemigoHP');
-		$('#'+charName[i]+ 'button span').removeClass('characterHP');
+		$(this).removeClass('opponentSyle opponentChar').addClass('currentOpponent');
+		$('#'+charName[i]+ 'button span').addClass('enemigoHP');
 		$('.chosenOpponent').append($(this));
 		//Turns off click for other opponent so that only chosenOpponent appears
 		for(var i = 0; i < charName.length; i++){
