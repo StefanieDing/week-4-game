@@ -59,7 +59,7 @@ $(document).on('click', '.startStyle',function(){
 	for(var i = 0; i < charName.length; i++){
 		if(charName[i] != $(this).data('name')){
 			$('#'+charName[i]).removeClass('charImg startStyle').addClass('opponentStyle');
-			$('.opponentStyle button span').removeClass('characterHP');
+			$('#'+charName[i]+ 'button span').removeClass('characterHP');
 			$('.opponentChar').append($('#'+charName[i]));
 		}
 	}
@@ -71,8 +71,8 @@ function chooseOpponent(){
 	$(document).on('click', '.opponentStyle', function(){
 		opponentHP = $(this).data('hp');
 		console.log(opponentHP);
-		$(this).removeClass('opponentSyle opponentChar').addClass('currentOpponent');
-		$(this).addClass('enemigoHP');
+		$(this + 'button span').removeClass('opponentSyle opponentChar').addClass('currentOpponent enemigoHP');
+		$('#'+charName[i]+ 'button span').removeClass('characterHP');
 		$('.chosenOpponent').append($(this));
 		//Turns off click for other opponent so that only chosenOpponent appears
 		for(var i = 0; i < charName.length; i++){
