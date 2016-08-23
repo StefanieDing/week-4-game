@@ -6,28 +6,27 @@ var charName = ['Baymax', 'Hiro','GoGo', 'Honey-Lemon', 'Wasabi', 'Fred']
 var charHP = [2000, 1650, 1850, 1700, 1800, 1500];
 var charImg = ['Baymax.png', 'Hiro.png', 'GoGo.png', 'HoneyLemon.png', 'Wasabi.png', 'Fred.png'];
 var charHit = [200, 165, 185, 170, 180, 150];
-var charSpecialAttack = [250, 215, 235, 220, 230, 200];
+var charSpecial = [250, 215, 235, 220, 230, 200];
 
-var userHP; var opponentHP; var opponentAttack; 
+var userHP; var userAttack; var opponentHP; var opponentAttack; 
 opponents = 5; 
-var opponentAttackArray = ['hit', 'spAttack', 'block']; 
+var opponentAttackArray = ['hit', 'specialAttack', 'block']; 
 
+//headerButtons
 $(".restartButton").on("click", function(){
-	chooseCharacter();
+
 });
-//Plays & Pauses music
 $(".playButton").on("click", function(){
 	music.play();
 });
 $(".pauseButton").on("click", function(){
 	music.pause();
 });
-
 $(".close").on("click", function(){
 	$('.alert').remove();
 });
 
-//Creating buttons *WIP Need to make images appear. 
+//Creating buttons
 for(var i = 0; i < charName.length; i++){
 	var character = $('<button>');
 	var characterPic = $('<img>'); 
@@ -38,12 +37,12 @@ for(var i = 0; i < charName.length; i++){
 	character.attr({'data-hp': charHP[i]});
 	character.attr({'data-hit': charHit[i]});
 	character.attr({'data-name': charName[i]});
-	character.attr({'data-spAttack': charSpecialAttack[i]});
-	console.log(characterPic)
-	character.append(charName[i], characterPic, charHP[i])
+	//Not Working**
+	character.attr({'data-special': charSpecial[i]});
+	character.append(charName[i], characterPic, charHP[i]);
 	$('.startBtn').append(character);
 }
-
+// console.log($('#Baymax').data('special'));
 $(document).on('click', '.startStyle',function(){
 	userHP = $(this).data('hp');
 	console.log(userHP);
@@ -65,61 +64,70 @@ $(document).on('click', '.startStyle',function(){
 		console.log(opponentHP);
 		$(this).removeClass('opponentSyle opponentChar').addClass('currentOpponent');
 		$('.chosenOpponent').append($(this));
-
+		//Turns off click for other opponent so that only chosenOpponent appears
 		for(var i = 0; i < charName.length; i++){
 			if(charName[i] != $(this).data('name')){
-				$('#'+charName[i]).off('click');
+				$(document).off('click','.opponentStyle');
 			}
 		}
-		battleMode($('.userChar'), $('.chosenOpponent'));
+		battleMode();
 	});
 
-function battleMode(userChar, opponentChar){
-	//randomly selects an attack for the opponent and sets to opponentAttack *WIP
-	var randomAttack = Math.floor(Math.random() * 2);
-		if(randomAttack == 0){
-			opponentAttack = opponentChar.data('hit');
+function battleMode(){
+
+	//randomly selects an attack for the opponent and sets to opponentAttack 
+	var randomAttack = opponentAttackArray[Math.floor(Math.random() * 2)];
+		if(randomAttack == 'hit'){
+			opponentAttack = $('.currentOpponent').data('hit');
 		}
-		if(randomAttack == 0){
-			opponentAttack = opponentChar.data('spAttack');
+		if(randomAttack == 'specialAttack'){
+			opponentAttack = $('.currentOpponent').data('special');
 		}
-		if(randomAttack == 2){
+		if(randomAttack == 'block'){
 			opponentAttack = 'block';
 		}
 		console.log(randomAttack);
 	console.log(opponentAttack);
 
 	$('.hitBtn').on('click', function(){
+		userAttack = $('.userStyle').data('hit');
 		if(opponentAttack == 'block'){
-			userHP = userHP - $('.userChar').data(hit);
+			userHP = userHP - userAttack
 		}
 		else{
-			opponentHP = opponentHP - $('.userChar').data(hit);
+			opponentHP = opponentHP - userAttack;
 			userHP = userHP - opponentAttack;
 		}
+		console.log(userHP +" "+ opponentHP);
+		battleMode();
 		winOrLose()
 	});
 
 	$('.spAttackBtn').on('click', function(){
-		if(opponentsAttack == 'block'){
-			userHP = userHP - $('.userChar').data(spAttack);
+		userAttack = $('.userStyle').data('special');
+		if(opponentAttack == 'block'){
+			userHP = userHP - userAttack;
 		}
 		else{
-			opponentHP = opponentHP - $('.userChar').data(spAttack);
+			opponentHP = opponentHP - userAttack;
 			userHP = userHP - opponentAttack;
 		}
+		console.log(userHP +" "+ opponentHP);
+		battleMode();
 		winOrLose()
 	});
 
 	$('.blockBtn').on('click', function(){
 		//If both character block, nothing happens
-		if(opponentsAttack == 'block'){
+		if(opponentAttack == 'block'){
 			userHP = userHP;
 			opponentHP = opponentHP;
 		}
 		else{
 			opponentHP = opponentHP - opponentAttack;
 		}
+		console.log(userHP +" "+ opponentHP);
+		battleMode();
 		winOrLose()
 	});
 
@@ -134,20 +142,21 @@ function winOrLose(){
 
 	if (opponentHP <= 0){
 		alert("You've defeated your opponent! Click another character to continue.");
+		$('.chosenOpponent').remove();
+		//$(document).off('click','.opponentStyle');
 		//play winAudio
 		opponents--;
-		choosOpponent();
+		
 	}
 
-	if ((opponentHP <= 0) && (defenders == 0)){
-		alert("You've defeated all your opponents! Congratulations, you've tasted sweet victory!");
+	if ((opponentHP <= 0) && (opponents == 0)){
+		alert("Congratulations!!! You've defeated all your opponents!");
 		//play winAudio
 		//set up restart button which calls on newGame()
 	}
 }
 
-	//restart button
-	//defenders = 5;
+
 	
 
 
