@@ -44,7 +44,8 @@ for(var i = 0; i < charName.length; i++){
 	character.attr({'data-hit': charHit[i]});
 	character.attr({'data-name': charName[i]});
 	character.attr({'data-special': charSpecial[i]});
-	character.append(charName[i], characterPic, character.data('hp'));
+	var hpSpan = $('<span>').addClass('characterHP').html(character.data('hp'));
+	character.append(charName[i], characterPic, hpSpan);
 	$('.startBtn').append(character);
 }
 
@@ -58,6 +59,7 @@ $(document).on('click', '.startStyle',function(){
 	for(var i = 0; i < charName.length; i++){
 		if(charName[i] != $(this).data('name')){
 			$('#'+charName[i]).removeClass('charImg startStyle').addClass('opponentStyle');
+			$('.opponentStyle button span').removeClass('characterHP').addClass('enemyHP');
 			$('.opponentChar').append($('#'+charName[i]));
 		}
 	}
@@ -97,9 +99,9 @@ function generateOpponentAttack(){
 
 function displayHP(){
 		$('.currentOpponent').data('hp', opponentHP);
-		$('.opponentHP').html(opponentHP);
+		$('.enemigoHP').html(opponentHP);
 		$('.userStyle').data('hp', userHP);
-		$('.userHP').html(userHP);
+		$('.characterHP').html(userHP);
 }
 
 function battleMode(){
