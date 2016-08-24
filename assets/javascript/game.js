@@ -1,6 +1,7 @@
 //Music
 var music = document.createElement('audio');
 music.setAttribute('src', '../week-4-game/assets/sounds/FOB-Immortals.mp3');
+music.volume=.3;
 var winAudio = document.createElement('audio');
 winAudio.setAttribute('src', '../week-4-game/assets/sounds/Badalalalala-louder.mp3');
 var fightAudio = document.createElement('audio');
@@ -19,8 +20,20 @@ opponents = 5;
 var opponentAttackArray = ['hit', 'specialAttack', 'block']; 
 
 //headerButtons
+$(".startButton").on("click", function(){
+	$(this).off('click');
+	newGame();
+});
 $(".restartButton").on("click", function(){
-
+	if(startPressed = true){
+	$('.message').html("");
+	//removes remaining characters off the board.
+	for(var i = 0; i< charName.length; i++){
+		$('#'+charName[i]).remove();
+	}
+	opponents = 5;
+	newGame();
+	}
 });
 $(".playButton").on("click", function(){
 	music.play();
@@ -32,6 +45,7 @@ $(".close").on("click", function(){
 	$('.alert').remove();
 });
 
+function newGame(){
 //Creating buttons
 for(var i = 0; i < charName.length; i++){
 	var character = $('<button>');
@@ -59,12 +73,13 @@ $(document).on('click', '.startStyle',function(){
 	for(var i = 0; i < charName.length; i++){
 		if(charName[i] != $(this).data('name')){
 			$('#'+charName[i]).removeClass('charImg startStyle').addClass('opponentStyle');
-			$('#'+charName[i]+ 'button span').removeClass('characterHP');
+			$('#'+charName[i]+ ' span').removeClass('characterHP');
 			$('.opponentChar').append($('#'+charName[i]));
 		}
 	}
 	chooseOpponent();
 });
+}
 
 function chooseOpponent(){
 //clicking opponents sends them to battleMode function. 
@@ -72,7 +87,7 @@ function chooseOpponent(){
 		opponentHP = $(this).data('hp');
 		console.log(opponentHP);
 		$(this).removeClass('opponentSyle opponentChar').addClass('currentOpponent');
-		$('#'+charName[i]+ 'button span').addClass('enemigoHP');
+		$(this).children('span').attr('class','enemigoHP');
 		$('.chosenOpponent').append($(this));
 		//Turns off click for other opponent so that only chosenOpponent appears
 		for(var i = 0; i < charName.length; i++){
@@ -144,6 +159,7 @@ function battleMode(){
 		if(opponentAttack == 'block'){
 			userHP = userHP;
 			opponentHP = opponentHP;
+			displayHP();
 		}
 		else{
 			opponentHP = opponentHP - opponentAttack;
@@ -159,21 +175,20 @@ function winOrLose(){
 	if (opponentHP <= 0){
 		fightAudio.play();
 		$('.messages').html("You've defeated your opponent! Click another character to continue.");
-		$('.chosenOpponent').remove();
+		var enemy = $('.currentOpponent').data('name');
+		$('#' + enemy).remove();
 		chooseOpponent();
 		opponents--;
 	}
 	if ((opponentHP <= 0) && (opponents == 0)){
 		winAudio.play();
-		$('.messages').html("Congratulations!!! You've defeated all your opponents!");
-		//set up restart button which calls on newGame()
+		$('.messages').html("Congratulations!!! You've defeated all your opponents! Press 'Restart' to start a new game.");
 	}
 	if (userHP <= 0){
 		loseAudio.play();
-		$('.messages').html("You lost. Game over.");
-		//set up restart button which calls on newGame()
+		$('.messages').html("You lost. Game over. Press 'Restart' to start a new game.");
 	}
-	//battleMode();
+	
 }
 
 
