@@ -191,8 +191,7 @@ function winOrLose(){
 	if (userHP <= 0){
 		loseAudio.play();
 		$('.messages').html("You lost. Game over. Press 'Restart' to start a new game.");
-	}
-	
+	}	
 }
 
 
