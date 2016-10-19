@@ -24,7 +24,7 @@ Places selected opponent into the 'Battleground'
 - Bootswatch
 - jQuery
 
-### Prerequisities
+### Prerequisites
 
 ```
 - Bootswatch: visit and download https://bootswatch.com/superhero/ - link in html
