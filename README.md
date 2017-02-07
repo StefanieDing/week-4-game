@@ -1,5 +1,7 @@
 ## Big Hero 6: RPG
 
+https://devcenter.heroku.com/articles/rails-asset-pipeline
+
 Big Hero 6 themed RPG game. The user can choose their favorite character from the cast of Big Hero 6 and has to battle all the other characters to win the game. I added an option to play 'Battle Music' (Fall Out Boy - Immortals) whilst playing the game.
 
 ## Motivation

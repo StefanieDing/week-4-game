@@ -1,13 +1,13 @@
 //Music
 var music = document.createElement('audio');
-music.setAttribute('src', '../week-4-game/assets/sounds/FOB-Immortals.mp3');
+music.setAttribute('src', '../week-4-game/public/assets/sounds/FOB-Immortals.mp3');
 music.volume=.3;
 var winAudio = document.createElement('audio');
-winAudio.setAttribute('src', '../week-4-game/assets/sounds/Badalalalala-louder.mp3');
+winAudio.setAttribute('src', '../week-4-game/public/assets/sounds/Badalalalala-louder.mp3');
 var fightAudio = document.createElement('audio');
-fightAudio.setAttribute('src', '../week-4-game/assets/sounds/Backkick.mp3');
+fightAudio.setAttribute('src', '../week-4-game/public/assets/sounds/Backkick.mp3');
 var loseAudio = document.createElement('audio');
-loseAudio.setAttribute('src', '../week-4-game/assets/sounds/ItsAlrightToCry.mp3');
+loseAudio.setAttribute('src', '../week-4-game/public/assets/sounds/ItsAlrightToCry.mp3');
 
 var charName = ['Baymax', 'Hiro','GoGo', 'Honey-Lemon', 'Wasabi', 'Fred']
 var charHP = [2000, 1650, 1850, 1700, 1800, 1500];
@@ -25,8 +25,8 @@ $(".startButton").on("click", function(){
 	newGame();
 });
 $(".restartButton").on("click", function(){
+	$('.messages').html(" ");
 	if(startPressed = true){
-	$('.message').html(" ");
 	//removes remaining characters off the board.
 	for(var i = 0; i< charName.length; i++){
 		$('#'+charName[i]).remove();
@@ -51,7 +51,7 @@ function newGame(){
 for(var i = 0; i < charName.length; i++){
 	var character = $('<button>');
 	var characterPic = $('<img>'); 
-	characterPic.attr('src', '../week-4-game/assets/images/' + charImg[i]);
+	characterPic.attr('src', '../week-4-game/public/assets/images/' + charImg[i]);
 	characterPic.addClass('picStyle');
 	character.addClass('startStyle');
 	character.attr('id', charName[i]);
@@ -128,12 +128,12 @@ function battleMode(){
 		generateOpponentAttack();
 		userAttack = $('.userStyle').data('hit');
 		if(opponentAttack == 'block'){
-			userHP = userHP - userAttack;
+			userHP = parseInt(userHP - userAttack);
 			displayHP();
 		}
 		else{
-			opponentHP = opponentHP - userAttack;
-			userHP = userHP - opponentAttack;
+			opponentHP = parseInt(opponentHP - userAttack);
+			userHP = parseInt(userHP - opponentAttack);
 			displayHP();
 		}
 		console.log(userHP +" "+ opponentHP);
@@ -144,12 +144,12 @@ function battleMode(){
 		generateOpponentAttack();
 		userAttack = $('.userStyle').data('special');
 		if(opponentAttack == 'block'){
-			userHP = userHP - userAttack;
+			userHP = parseInt(userHP - userAttack);
 			displayHP();
 		}
 		else{
-			opponentHP = opponentHP - userAttack;
-			userHP = userHP - opponentAttack;
+			opponentHP = parseInt(opponentHP - userAttack);
+			userHP = parseInt(userHP - opponentAttack);
 			displayHP();
 		}
 		console.log(userHP +" "+ opponentHP);
@@ -165,7 +165,7 @@ function battleMode(){
 			displayHP();
 		}
 		else{
-			opponentHP = opponentHP - opponentAttack;
+			opponentHP = parseInt(opponentHP - opponentAttack);
 			displayHP();
 		}
 		console.log(userHP +" "+ opponentHP);
